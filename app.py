@@ -93,7 +93,7 @@ if st.button("💰 Estimer le Prix"):
 
     # On affiche le graphique à barres
     st.bar_chart(df_importance)
-# --- AJOUT À LA FIN DU FICHIER app.py ---
+    # --- AJOUT À LA FIN DU FICHIER app.py ---
 
 st.sidebar.markdown("---")
 st.sidebar.header("🧪 Zone Laboratoire")
@@ -154,5 +154,4 @@ if show_lab:
         - **Ligne Rouge** : La perfection.
         - **Nuage de points** : Si le nuage est compact autour de la ligne, le modèle est bon. S'il est dispersé, le modèle hésite.
         """)
-
 
