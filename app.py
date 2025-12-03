@@ -30,6 +30,17 @@ with col2:
     latitude = st.number_input("Latitude (Ex: 34.0 LA / 37.7 SF)", value=37.7)
     longitude = st.number_input("Longitude (Ex: -118.2 LA / -122.4 SF)", value=-122.4)
 
+# On sort de la colonne (reviens tout à gauche, sans espace au début de la ligne)
+st.write("---") # Une petite ligne de séparation esthétique
+st.subheader("📍 Localisation du bien")
+
+# On crée les données pour la carte avec les variables que l'utilisateur vient de choisir
+map_data = pd.DataFrame({'lat': [latitude], 'lon': [longitude]})
+
+# On affiche la carte
+st.map(map_data, zoom=10)
+# --- FIN DE TON AJOUT ---
+
 # 3. La Prédiction (L'Action)
 if st.button("💰 Estimer le Prix"):
     # On doit recréer exactement la même structure que lors de l'entraînement
@@ -83,4 +94,4 @@ if st.button("💰 Estimer le Prix"):
     # On affiche le graphique à barres
     st.bar_chart(df_importance)
     
-    st.caption("Ce graphique montre quels éléments ont le plus influencé l'IA pour cette estimation.")
+
