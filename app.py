@@ -50,4 +50,37 @@ if st.button("💰 Estimer le Prix"):
     # Le prix est en centaines de milliers de dollars dans le dataset (ex: 2.5 = 250k)
     prix_final = prediction[0] * 100000 
     
-    st.success(f"Le prix estimé est de : {prix_final:,.2f} $")
+    # Prix moyen dans le dataset original (environ 206k)
+    prix_moyen_californie = 206855 
+    delta = prix_final - prix_moyen_californie
+
+    col_resultat, col_vide = st.columns(2)
+    
+    with col_resultat:
+        st.metric(
+            label="Prix Estimé", 
+            value=f"{prix_final:,.0f} $", 
+            delta=f"{delta:,.0f} $ vs Moyenne",
+            delta_color="inverse" # Rouge si cher, Vert si pas cher
+        )
+    # ... après st.success(...)
+
+    st.subheader("🔍 Comprendre la décision")
+    
+    # On récupère l'importance de chaque critère (c'est un % calculé par le Random Forest)
+    importance = model.feature_importances_
+    
+    # On crée un tableau propre pour l'affichage
+    feature_names = ['Revenu', 'Âge', 'Pièces', 'Chambres', 'Population', 'Occupants', 'Latitude', 'Longitude']
+    df_importance = pd.DataFrame({
+        'Critère': feature_names,
+        'Importance': importance
+    }).set_index('Critère')
+
+    # On trie du plus important au moins important
+    df_importance = df_importance.sort_values(by='Importance', ascending=False)
+
+    # On affiche le graphique à barres
+    st.bar_chart(df_importance)
+    
+    st.caption("Ce graphique montre quels éléments ont le plus influencé l'IA pour cette estimation.")
